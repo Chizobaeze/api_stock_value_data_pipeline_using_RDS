@@ -5,11 +5,11 @@ This project demonstrates a production-grade data pipeline built using Airflow a
 API ➜ Airflow  ➜ RDS (MYSQL) ➜ Airbyte ➜ Redshift
 
 ## Tool used
-Apache Airflow (Dockerized)
-MYSQL RDS – remoprary Data warehouse
-Airbyte (Minikube) – ELT sync from RDS to Redshift
-Amazon Redshift – Data warehouse
-dbeaver - for logging and viewing my into my rds(mysql)
+1.Apache Airflow (Dockerized)
+2. MYSQL RDS – remoprary Data warehouse
+3. Airbyte (Minikube) – ELT sync from RDS to Redshift
+4. Amazon Redshift – Data warehouse
+5. dbeaver - for logging and viewing my into my rds(mysql)
 
 ## 1. Stock Data Extraction (API Layer)
 Source: api_stock_data from RapidAPI
