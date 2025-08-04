@@ -16,8 +16,8 @@ Every day, Airflow runs a scheduled job that connects to the stock API on RapidA
 ## 2. Staging in MySQL RDS (Temporary Warehouse)
 I used MySQL on Amazon RDS as a temporary place to store the raw data from the stock API.
 Airflow collects the data from the API and loads it into a staging table in MySQL.
-
 This step gives the data a proper structure (rows and columns) before sending it to Redshift.
+![image text](https://github.com/Chizobaeze/api_stock_value_data_pipeline_using_RDS/blob/2a434f82e14d250a8784e8bdab652b25adb4010c/rds_screenshot/for%20rds%202.PNG)
 
 ## 3. Airbyte Sync (Minikube Environment)
 Airbyte is a tool that I ran on Minikube (a local Kubernetes environment). It helps move data from MySQL (hosted on Amazon RDS) to Amazon Redshift. Once new data is stored in MySQL (coming from the API), Airbyte connects to it, checks for updates, and sends the data to Redshift.
