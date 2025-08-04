@@ -1,14 +1,15 @@
 # API_STOCK_VALUE_DATA_PIPELINE_USING_RDS
 This project demonstrates a production-grade data pipeline built using Airflow and Airbyte to extract stock market data from the api_stock_data API available on RapidAPI, store the data in Amazon S3, load it into MySQL (hosted on Amazon RDS or locally), and finally sync the curated data into Amazon Redshift for analytics.
 
-## ARCHITECURE
+## Architecture
 API ➜ Airflow  ➜ RDS (MYSQL) ➜ Airbyte ➜ Redshift
 
-## TOOLS USED
+## Tool used
 Apache Airflow (Dockerized)
 MYSQL RDS – remoprary Data warehouse
 Airbyte (Minikube) – ELT sync from RDS to Redshift
 Amazon Redshift – Data warehouse
+dbeaver - for logging and viewing my into my rds(mysql)
 
 ## 1. Stock Data Extraction (API Layer)
 Source: api_stock_data from RapidAPI
