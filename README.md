@@ -28,5 +28,7 @@ Redshift is the main storage where all the final data lives. After Airbyte moves
 ## DBeaver (Database Access & Validation Tool)
 I used DBeaver to connect to MySQL RDS and check the data loaded from the API.
 It helped me view tables, run quick checks, and make sure everything looked good before sending the data to Redshift.
+![Alt text](path_or_url_to_image)
+
 
 
