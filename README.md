@@ -1,0 +1,1 @@
+# stock-value-data-data-pipeline-using_redshift_RDS_and_airbyte-
