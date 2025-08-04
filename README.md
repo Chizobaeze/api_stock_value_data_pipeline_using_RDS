@@ -12,32 +12,21 @@ API ➜ Airflow  ➜ RDS (MYSQL) ➜ Airbyte ➜ Redshift
 ### 5. dbeaver - for logging and viewing my into my rds(mysql)
 
 ## 1. Stock Data Extraction (API Layer)
-Source: api_stock_data from RapidAPI
-Process: Data is fetched daily using a scheduled task (via Apache Airflow)
-
+Every day, Airflow runs a scheduled job that connects to the stock API on RapidAPI. It pulls fresh stock market data and prepares it for the next steps in the pipeline.
 ## 2. Staging in MySQL RDS (Temporary Warehouse)
-Tool: MySQL RDS acts as an intermediary storage.
-Purpose: Provides a structured relational format for raw API data.
-Ingestion: Airflow reads the file from api and loads it into a staging table in RDS.
+I used MySQL on Amazon RDS as a temporary place to store the raw data from the stock API.
+Airflow collects the data from the API and loads it into a staging table in MySQL.
+
+This step gives the data a proper structure (rows and columns) before sending it to Redshift.
 
 ## 3. Airbyte Sync (Minikube Environment)
-Tool: Airbyte, deployed on Minikube
-Source Connector: MySQL (RDS)
-Destination Connector: Amazon Redshift
-Function: Airbyte extracts data from MySQL, applies optional normalization, and loads it into Redshift.
-Sync Frequency: Scheduled to run automatically (e.g., daily)
+Airbyte is a tool that I ran on Minikube (a local Kubernetes environment). It helps move data from MySQL (hosted on Amazon RDS) to Amazon Redshift. Once new data is stored in MySQL (coming from the API), Airbyte connects to it, checks for updates, and sends the data to Redshift.
 
 ## 4. Final Destination – Amazon Redshift
-Tool: Redshift serves as the central data warehouse.
-Structure: Airbyte automatically creates schemas and tables.
-Purpose: Enables querying, dashboarding, and analytics on stock market data.
+Redshift is the main storage where all the final data lives. After Airbyte moves the stock data from MySQL, it automatically creates the right tables and folders (schemas) inside Redshift. This setup makes it easy to run queries, build dashboards, and analyze stock market trends using tools like SQL or BI platforms. It acts like the final stop where all clean and organized data is kept for reporting.
 
 ## DBeaver (Database Access & Validation Tool)
-Tool: DBeaver (MYSQL client)
-Use Case: Connected to MySQL (RDS) for querying and verifying API-ingested data
-Function: Used to explore table structures, run validation queries, and monitor data flow during pipeline execution
-Role in Project: Helped debug, log, and visually inspect the data at the RDS (MySQL) layer before syncing to Redshift
-
-
+I used DBeaver to connect to MySQL RDS and check the data loaded from the API.
+It helped me view tables, run quick checks, and make sure everything looked good before sending the data to Redshift.
 
 
