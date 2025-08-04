@@ -4,31 +4,80 @@ This project demonstrates a production-grade data pipeline built using Airflow a
 ## Architecture
 API ➜ Airflow  ➜ RDS (MYSQL) ➜ Airbyte ➜ Redshift
 
-## Tool used
-### 1.Apache Airflow (Dockerized)
-### 2. MYSQL RDS – Temoprary Data warehouse
-### 3. Airbyte (Minikube) – ELT sync from RDS to Redshift
-### 4. Amazon Redshift – Data warehouse
-### 5. dbeaver - for logging and viewing my into my rds(mysql)
 
-## 1. Stock Data Extraction (API Layer)
-Every day, Airflow runs a scheduled job that connects to the stock API on RapidAPI. It pulls fresh stock market data and prepares it for the next steps in the pipeline.
-## 2. Staging in MySQL RDS (Temporary Warehouse)
-I used MySQL on Amazon RDS as a temporary place to store the raw data from the stock API.
-Airflow collects the data from the API and loads it into a staging table in MySQL.
-This step gives the data a proper structure (rows and columns) before sending it to Redshift.
-![image text](https://github.com/Chizobaeze/api_stock_value_data_pipeline_using_RDS/blob/2a434f82e14d250a8784e8bdab652b25adb4010c/rds_screenshot/for%20rds%202.PNG)
+---
 
-## 3. Airbyte Sync (Minikube Environment)
-Airbyte is a tool that I ran on Minikube (a local Kubernetes environment). It helps move data from MySQL (hosted on Amazon RDS) to Amazon Redshift. Once new data is stored in MySQL (coming from the API), Airbyte connects to it, checks for updates, and sends the data to Redshift.
+## 🛠️ Tools Used
 
-## 4. Final Destination – Amazon Redshift
-Redshift is the main storage where all the final data lives. After Airbyte moves the stock data from MySQL, it automatically creates the right tables and folders (schemas) inside Redshift. This setup makes it easy to run queries, build dashboards, and analyze stock market trends using tools like SQL or BI platforms. It acts like the final stop where all clean and organized data is kept for reporting.
+| Tool          | Purpose                                                                 |
+|---------------|-------------------------------------------------------------------------|
+| **Apache Airflow** (Docker) | Orchestrates daily ETL jobs using DAGs                                 |
+| **MySQL RDS**              | Temporary staging area for structured API data            |
+| **Airbyte (Minikube)**     | ELT tool to sync from RDS (MySQL) to Redshift             |
+| **Amazon Redshift**        | Final data warehouse for analytics and BI                 |
+| **DBeaver**                | GUI tool for managing and validating data in MySQL RDS    |
 
-## DBeaver (Database Access & Validation Tool)
-I used DBeaver to connect to MySQL RDS and check the data loaded from the API.
-It helped me view tables, run quick checks, and make sure everything looked good before sending the data to Redshift.
-![image text](https://github.com/Chizobaeze/api_stock_value_data_pipeline_using_RDS/blob/6d4c6d6c8235e152705dd7a0084802f26532f724/rds_screenshot/dbeaver%20rds.PNG))
+---
+
+## 🔄 Pipeline Stages
+
+### 1️⃣ Stock Data Extraction (API Layer)
+
+- Airflow schedules a daily task that pulls stock market data from the `api_stock_data` API on **RapidAPI**.
+- The extracted data is structured and prepared for loading into MySQL.
+
+---
+
+### 2️⃣ Staging in MySQL RDS (Temporary Warehouse)
+
+- Airflow loads the structured API data into a **staging table** in **MySQL** hosted on **Amazon RDS**.
+- This step normalizes the raw JSON and transforms it into relational format (rows + columns).
+
+![MySQL RDS Screenshot](https://github.com/Chizobaeze/api_stock_value_data_pipeline_using_RDS/blob/2a434f82e14d250a8784e8bdab652b25adb4010c/rds_screenshot/for%20rds%202.PNG)
+
+---
+
+### 3️⃣ Airbyte Sync (Minikube Environment)
+
+- **Airbyte**, running inside a **Minikube** cluster, connects to the MySQL RDS instance.
+- It detects new or updated records and syncs the data into **Amazon Redshift**.
+- The sync is automatic and schema-aware.
+
+---
+
+### 4️⃣ Final Destination – Amazon Redshift
+
+- Redshift serves as the **analytics layer**.
+- After syncing, tables and schemas are auto-generated.
+- This setup enables:
+  - SQL-based querying
+  - Dashboard integration
+  - Time-series and trend analysis for stock data
+
+---
+
+### 🔍 DBeaver (Data Validation)
+
+- DBeaver connects to the MySQL RDS instance.
+- Used to validate data structure and quality before syncing to Redshift.
+
+![DBeaver MySQL Screenshot](https://github.com/Chizobaeze/api_stock_value_data_pipeline_using_RDS/blob/6d4c6d6c8235e152705dd7a0084802f26532f724/rds_screenshot/dbeaver%20rds.PNG)
+
+---
+
+## 📌 Summary
+
+| Component        | Description                              |
+|------------------|------------------------------------------|
+| Data Source      | RapidAPI – `api_stock_data`              |
+| Staging Layer    | MySQL on Amazon RDS                      |
+| Transformation   | Performed during ingestion via Airflow   |
+| Sync Tool        | Airbyte (MySQL ➜ Redshift)               |
+| Final Warehouse  | Amazon Redshift                          |
+| Monitoring Tool  | DBeaver                                  |
+
+---
+
 
 
 
