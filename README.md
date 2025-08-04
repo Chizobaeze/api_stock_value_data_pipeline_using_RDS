@@ -4,29 +4,29 @@ This project demonstrates a production-grade data pipeline built using Airflow a
 # ARCHITECURE
 API ➜ Airflow  ➜ RDS (MYSQL) ➜ Airbyte ➜ Redshift
 
-# TOOLS USED
+TOOLS USED
 Apache Airflow (Dockerized)
 MYSQL RDS – remoprary Data warehouse
 Airbyte (Minikube) – ELT sync from RDS to Redshift
 Amazon Redshift – Data warehouse
 
-# 1. Stock Data Extraction (API Layer)
+ 1. Stock Data Extraction (API Layer)
 Source: api_stock_data from RapidAPI
 Process: Data is fetched daily using a scheduled task (via Apache Airflow)
 
-# 2. Staging in MySQL RDS (Temporary Warehouse)
+ 2. Staging in MySQL RDS (Temporary Warehouse)
 Tool: MySQL RDS acts as an intermediary storage.
 Purpose: Provides a structured relational format for raw API data.
 Ingestion: Airflow reads the file from api and loads it into a staging table in RDS.
 
-# 3. Airbyte Sync (Minikube Environment)
+3. Airbyte Sync (Minikube Environment)
 Tool: Airbyte, deployed on Minikube
 Source Connector: MySQL (RDS)
 Destination Connector: Amazon Redshift
 Function: Airbyte extracts data from MySQL, applies optional normalization, and loads it into Redshift.
 Sync Frequency: Scheduled to run automatically (e.g., daily)
 
-# 4. Final Destination – Amazon Redshift
+ 4. Final Destination – Amazon Redshift
 Tool: Redshift serves as the central data warehouse.
 Structure: Airbyte automatically creates schemas and tables.
 Purpose: Enables querying, dashboarding, and analytics on stock market data.
