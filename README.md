@@ -32,6 +32,12 @@ Tool: Redshift serves as the central data warehouse.
 Structure: Airbyte automatically creates schemas and tables.
 Purpose: Enables querying, dashboarding, and analytics on stock market data.
 
+## DBeaver (Database Access & Validation Tool)
+Tool: DBeaver (MYSQL client)
+Use Case: Connected to MySQL (RDS) for querying and verifying API-ingested data
+Function: Used to explore table structures, run validation queries, and monitor data flow during pipeline execution
+Role in Project: Helped debug, log, and visually inspect the data at the RDS (MySQL) layer before syncing to Redshift
+
 
 
 
