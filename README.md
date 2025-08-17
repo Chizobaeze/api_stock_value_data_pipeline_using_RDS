@@ -57,7 +57,7 @@ API ➜ Airflow  ➜ RDS (MYSQL) ➜ Airbyte ➜ Redshift
   - SQL-based querying
   - Dashboard integration
   - Time-series and trend analysis for stock data
-
+![airbyte sql to redshift](https://github.com/Chizobaeze/api_stock_value_data_pipeline_using_RDS/blob/ac64b60c8a04fd9dcbb59ca1ab9682bdb93fdf65/rds_screenshot/airbyte(mysql-redshift)4.0.PNG)
 ---
 
 ### 🔍 DBeaver (Data Validation)
